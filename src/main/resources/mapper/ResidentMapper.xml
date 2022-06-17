@@ -15,7 +15,7 @@
         <result property="tag4_room" column="tag4_room"/>
     </resultMap>
 
-    <select id="getResident" resultMap="residentMapper" parameterType="java.lang.Integer">
+    <select id="getResident" resultMap="residentMapper" parameterType="java.lang.String">
         SELECT *
         FROM resident_info
         WHERE ic_card_no = #{ic_card_no}
