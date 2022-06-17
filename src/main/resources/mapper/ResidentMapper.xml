@@ -15,11 +15,11 @@
         <result property="tag4_room" column="tag4_room"/>
     </resultMap>
 
-<!--    <select id="getCounter" resultMap="countersMapper" parameterType="java.lang.Integer">-->
-<!--        SELECT `id`, `count`, `createdAt`, `updatedAt`-->
-<!--        FROM Counters-->
-<!--        WHERE id = #{id}-->
-<!--    </select>-->
+    <select id="getResident" resultMap="residentMapper" parameterType="java.lang.Integer">
+        SELECT *
+        FROM resident_info
+        WHERE ic_card_no = #{ic_card_no}
+    </select>
 
 <!--    <update id="upsertResident" parameterType="com.tencent.wxcloudrun.model.Resident">-->
 <!--        INSERT INTO `resident_info`(`id_card_no`, `open_id`, `name`, `phone`, `community_id`,-->
