@@ -87,14 +87,10 @@ public class ResidentController {
    * @return API response json
    */
   @PostMapping(value = "/resident/register")
-  ApiResponse get(@RequestBody Resident resid) {
+  ApiResponse get(@RequestBody Resident resident) {
     logger.info("/resident/register post request");
 
-    String ic_card_no = resid.getIc_card_no();
-    String open_id = resid.getOpen_id();
-    Integer community_id = resid.getCommunity_id();
-
-    residentService.upsertResident(resid);
+    residentService.upsertResident(resident);
 
     return ApiResponse.ok();
   }
