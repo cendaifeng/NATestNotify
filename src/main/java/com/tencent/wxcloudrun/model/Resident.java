@@ -15,9 +15,13 @@ public class Resident implements Serializable {
 
   private String name;
 
+  private String phone;
+
   private Integer community_id;
 
   private boolean is_staff;
+
+  private Integer location_id;
 
   private Integer tag3_floor;
 
