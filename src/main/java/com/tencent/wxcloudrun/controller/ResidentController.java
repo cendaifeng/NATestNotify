@@ -90,7 +90,7 @@ public class ResidentController {
   ApiResponse get(@RequestBody Resident resident) {
     logger.info("/resident/register post request");
 
-    residentService.upsertResident(resident);
+    residentService.register(resident);
 
     return ApiResponse.ok();
   }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.ResidentMapper">
+
+    <resultMap id="residentMapper" type="com.tencent.wxcloudrun.model.Resident">
+        <id property="id" column="id"/>
+        <result property="ic_card_no" column="ic_card_no"/>
+        <result property="open_id" column="open_id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="community_id" column="community_id"/>
+        <result property="is_staff" column="is_staff"/>
+        <result property="location_id" column="location_id"/>
+        <result property="tag3_floor" column="tag3_floor"/>
+        <result property="tag4_room" column="tag4_room"/>
+    </resultMap>
+
+<!--    <select id="getCounter" resultMap="countersMapper" parameterType="java.lang.Integer">-->
+<!--        SELECT `id`, `count`, `createdAt`, `updatedAt`-->
+<!--        FROM Counters-->
+<!--        WHERE id = #{id}-->
+<!--    </select>-->
+
+<!--    <update id="upsertResident" parameterType="com.tencent.wxcloudrun.model.Resident">-->
+<!--        INSERT INTO `resident_info`(`id_card_no`, `open_id`, `name`, `phone`, `community_id`,-->
+<!--        `is_staff`, `location`)-->
+<!--        VALUE(#{id}, #{count}) -->
+<!--        ON DUPLICATE KEY UPDATE count=#{count}-->
+<!--    </update>-->
+
+</mapper>

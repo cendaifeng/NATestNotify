@@ -1,12 +1,17 @@
 package com.tencent.wxcloudrun.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
 
 @Data
+@TableName("resident_info")
 public class Resident implements Serializable {
 
+  @TableId(value = "id", type = IdType.AUTO)
   private Integer id;
 
   private String ic_card_no;
