@@ -4,7 +4,7 @@
 
     <resultMap id="residentMapper" type="com.tencent.wxcloudrun.model.Resident">
         <id property="id" column="id"/>
-        <result property="ic_card_no" column="ic_card_no"/>
+        <result property="ic_card_no" column="ic_card_no" javaType="java.lang.String"/>
         <result property="open_id" column="open_id"/>
         <result property="name" column="name"/>
         <result property="phone" column="phone"/>
