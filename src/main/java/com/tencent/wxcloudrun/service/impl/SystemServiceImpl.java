@@ -1,11 +1,7 @@
 package com.tencent.wxcloudrun.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tencent.wxcloudrun.dao.SystemMapper;
+import com.tencent.wxcloudrun.dao.CommunityMapper;
 import com.tencent.wxcloudrun.model.Community;
-import com.tencent.wxcloudrun.model.Resident;
 import com.tencent.wxcloudrun.service.SystemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +14,15 @@ import java.util.Optional;
 @Service
 public class SystemServiceImpl implements SystemService {
 
-  final SystemMapper systemMapper;
+  final CommunityMapper communityMapper;
 
-  public SystemServiceImpl(@Autowired SystemMapper systemMapper) {
-    this.systemMapper = systemMapper;
+  public SystemServiceImpl(@Autowired CommunityMapper communityMapper) {
+    this.communityMapper = communityMapper;
   }
 
   @Override
   public String getRegion(String region_code) {
-    List<Community> allCommunity = systemMapper.getAllCommunity(region_code);
+    List<Community> allCommunity = communityMapper.getAllCommunity(region_code);
     log.info(allCommunity.toString());
     return allCommunity.toString();
   }

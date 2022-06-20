@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface SystemMapper {
+public interface CommunityMapper {
 
   List<Community> getAllCommunity(@Param("region_code") String region_code);
 

@@ -9,7 +9,7 @@
         <result property="region_code" column="region_code" javaType="java.lang.String"/>
     </resultMap>
 
-    <select id="getAllCommunity" resultMap="SystemMapper" parameterType="java.lang.String">
+    <select id="getAllCommunity" resultMap="communityMapper" parameterType="java.lang.String">
         SELECT *
         FROM community_list
         WHERE region_code = #{region_code}
