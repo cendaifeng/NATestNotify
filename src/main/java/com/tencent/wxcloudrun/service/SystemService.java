@@ -12,5 +12,5 @@ public interface SystemService{
 
   Map<String, List<Community>> getRegionCommunity(String region_code);
 
-  Map<String, List<Location>> getCommunityTag2(String community_id);
+  Map<String, List<Location>> getCommunityLocation(String community_id);
 }

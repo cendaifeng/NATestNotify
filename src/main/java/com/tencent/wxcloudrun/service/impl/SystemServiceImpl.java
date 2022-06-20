@@ -34,9 +34,9 @@ public class SystemServiceImpl implements SystemService {
   }
 
   @Override
-  public Map<String, List<Location>> getCommunityTag2(String community_id) {
-    List<Location> allTag2 = locationMapper.getAllTag2(community_id);
-    Map<String, List<Location>> map = allTag2.stream().collect(Collectors.groupingBy(Location::getTag1));
+  public Map<String, List<Location>> getCommunityLocation(String community_id) {
+    List<Location> allLocation = locationMapper.getAllLocation(community_id);
+    Map<String, List<Location>> map = allLocation.stream().collect(Collectors.groupingBy(Location::getTag1));
     return map;
   }
 }

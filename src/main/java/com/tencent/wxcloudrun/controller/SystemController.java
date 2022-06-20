@@ -72,9 +72,9 @@ public class SystemController {
    * @return API response json
    */
   @GetMapping(value = "/system/community")
-  ApiResponse getCommunityTag2(@RequestParam String community_id) {
+  ApiResponse getCommunityLocation(@RequestParam String community_id) {
     logger.info("/system/community get request");
-    Map<String, List<Location>> community_info =  systemService.getCommunityTag2(community_id);
+    Map<String, List<Location>> community_info =  systemService.getCommunityLocation(community_id);
     return ApiResponse.ok(community_info);
   }
   
