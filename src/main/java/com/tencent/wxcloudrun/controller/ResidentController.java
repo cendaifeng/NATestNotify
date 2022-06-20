@@ -8,10 +8,7 @@ import com.tencent.wxcloudrun.service.ResidentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.util.HashMap;
@@ -58,9 +55,9 @@ public class ResidentController {
    * 居民登录
    * @return API response json
    */
-  @GetMapping(value = "/resident/login")
+  @PostMapping(value = "/resident/login")
   ApiResponse login(@RequestBody Map info) {
-    logger.info("/resident/login get request");
+    logger.info("/resident/login post request");
     String ic_card_no = (String) info.get("ic_card_no");
     String open_id = (String) info.get("open_id");
     Optional<Resident> resid = residentService.getResident(ic_card_no);
@@ -70,6 +67,15 @@ public class ResidentController {
                 put("status", 0);}});
 
     String resid_open_id = resid.get().getOpen_id();
+
+    if (resid_open_id == null || resid_open_id.equals("")) {
+      Resident resid2 = resid.get();
+      resid2.setOpen_id(open_id);
+      if (!residentService.updateByIc(resid2))
+        logger.info("用户openid更新失败");
+      resid_open_id = open_id;
+    }
+
     if (open_id.equals(resid_open_id)) {
       String sha1 = getSha1(open_id.concat(ic_card_no));
       return ApiResponse.ok(new HashMap<Object, Object>(){{
@@ -90,9 +96,40 @@ public class ResidentController {
   ApiResponse get(@RequestBody Resident resident) {
     logger.info("/resident/register post request");
 
-    residentService.register(resident);
+    if (residentService.register(resident))
+      return ApiResponse.ok();
+    else
+      return ApiResponse.error("注册失败");
+  }
 
-    return ApiResponse.ok();
+  /**
+   * 查询居民信息
+   * @return API response json
+   */
+  @GetMapping(value = "/resident/info")
+  ApiResponse info(@RequestParam String open_id) {
+    logger.info("/resident/info get request");
+    Optional<Resident> resid = residentService.getResidentByOpenId(open_id);
+
+    if (!resid.isPresent())
+      return ApiResponse.ok("该微信账号未绑定身份信息", null);
+
+    return ApiResponse.ok(resid);
+  }
+
+  /**
+   * 更新居民信息
+   * 按open_id查找
+   * @return API response json
+   */
+  @PostMapping(value = "/resident/update")
+  ApiResponse update(@RequestBody Resident resident) {
+    logger.info("/resident/update post request");
+
+    if (residentService.update(resident))
+      return ApiResponse.ok();
+    else
+      return ApiResponse.error("更新失败");
   }
   
 }

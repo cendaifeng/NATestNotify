@@ -12,4 +12,6 @@ public interface ResidentMapper extends BaseMapper<Resident> {
 
   Resident getResident(@Param("ic_card_no") String ic_card_no);
 
+  Resident getResidentByOpenId(@Param("open_id") String open_id);
+
 }

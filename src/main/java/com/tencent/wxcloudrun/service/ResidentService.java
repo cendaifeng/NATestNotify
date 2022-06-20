@@ -11,6 +11,12 @@ public interface ResidentService extends IService<Resident> {
 
   Optional<Resident> getResident(String ic_card_no);
 
+  Optional<Resident> getResidentByOpenId(String open_id);
+
   boolean register(Resident resident);
+
+  boolean update(Resident resident);
+
+  boolean updateByIc(Resident resident);
 
 }

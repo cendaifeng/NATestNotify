@@ -21,6 +21,12 @@
         WHERE ic_card_no = #{ic_card_no}
     </select>
 
+    <select id="getResidentByOpenId" resultMap="residentMapper" parameterType="java.lang.String">
+        SELECT *
+        FROM resident_info
+        WHERE open_id = #{open_id}
+    </select>
+
 <!--    <update id="upsertResident" parameterType="com.tencent.wxcloudrun.model.Resident">-->
 <!--        INSERT INTO `resident_info`(`id_card_no`, `open_id`, `name`, `phone`, `community_id`,-->
 <!--        `is_staff`, `location`)-->

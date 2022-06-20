@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.tencent.wxcloudrun.dao.CountersMapper;
@@ -35,12 +36,31 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
   }
 
   @Override
+  public Optional<Resident> getResidentByOpenId(String open_id) {
+    return Optional.ofNullable(residentMapper.getResidentByOpenId(open_id));
+  }
+
+  @Override
   public boolean register(Resident resident) {
     if (super.save(resident)) {
       log.info("新用户注册啦！ "+resident);
       return true;
     }
     return false;
+  }
+
+  @Override
+  public boolean update(Resident resident) {
+    UpdateWrapper<Resident> wrapper = new UpdateWrapper<>();
+    wrapper.eq("open_id", resident.getOpen_id());
+    return super.update(resident, wrapper);
+  }
+
+  @Override
+  public boolean updateByIc(Resident resident) {
+    UpdateWrapper<Resident> wrapper = new UpdateWrapper<>();
+    wrapper.eq("ic_card_no", resident.getIc_card_no());
+    return super.update(resident, wrapper);
   }
 
 }
