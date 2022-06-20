@@ -62,8 +62,7 @@ public class SystemController {
   ApiResponse getRegionCommunity(@RequestParam String region_code) {
     logger.info("/system/region get request");
     Map<String, List<Community>> region_info =  systemService.getRegionCommunity(region_code);
-    logger.info(region_info.toString());
-    logger.info(new Gson().toJson(region_info));
+    logger.info(new Gson().toJson(region_info));  //到前端自动转
     return ApiResponse.ok(region_info);
   }
 
@@ -75,6 +74,7 @@ public class SystemController {
   ApiResponse getCommunityLocation(@RequestParam String community_id) {
     logger.info("/system/community get request");
     Map<String, List<Location>> community_info =  systemService.getCommunityLocation(community_id);
+    logger.info(new Gson().toJson(community_info));
     return ApiResponse.ok(community_info);
   }
   
