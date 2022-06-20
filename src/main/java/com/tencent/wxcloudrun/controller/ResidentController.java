@@ -93,7 +93,7 @@ public class ResidentController {
    * @return API response json
    */
   @PostMapping(value = "/resident/register")
-  ApiResponse get(@RequestBody Resident resident) {
+  ApiResponse register(@RequestBody Resident resident) {
     logger.info("/resident/register post request");
 
     if (residentService.register(resident))

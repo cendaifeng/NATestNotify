@@ -1,6 +1,7 @@
 package com.tencent.wxcloudrun.controller;
 
 import com.tencent.wxcloudrun.config.ApiResponse;
+import com.tencent.wxcloudrun.model.Community;
 import com.tencent.wxcloudrun.service.SystemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -43,7 +45,7 @@ public class SystemController {
   @GetMapping(value = "/system/region")
   ApiResponse getRegion(@RequestParam String region_code) {
     logger.info("/system/region get request");
-    String region_info =  systemService.getRegion(region_code);
+    Map<String, List<Community>> region_info =  systemService.getRegion(region_code);
     return ApiResponse.ok(region_info);
   }
   

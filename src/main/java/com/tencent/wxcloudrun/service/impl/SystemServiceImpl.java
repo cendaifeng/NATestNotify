@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -21,9 +23,10 @@ public class SystemServiceImpl implements SystemService {
   }
 
   @Override
-  public String getRegion(String region_code) {
+  public Map<String, List<Community>> getRegion(String region_code) {
     List<Community> allCommunity = communityMapper.getAllCommunity(region_code);
-    log.info(allCommunity.toString());
-    return allCommunity.toString();
+    Map<String, List<Community>> map = allCommunity.stream().collect(Collectors.groupingBy(Community::getStreet));
+    log.info(map.toString());
+    return map;
   }
 }
