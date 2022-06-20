@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.CommunityMapper">
+
+    <resultMap id="communityMapper" type="com.tencent.wxcloudrun.model.Community">
+        <id property="community_id" column="community_id"/>
+        <result property="community_name" column="community_name" javaType="java.lang.String"/>
+        <result property="street" column="street" javaType="java.lang.String"/>
+        <result property="region_code" column="region_code" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="getAllCommunity" resultMap="SystemMapper" parameterType="java.lang.String">
+        SELECT *
+        FROM community_list
+        WHERE region_code = #{region_code}
+    </select>
+
+</mapper>
