@@ -25,7 +25,8 @@ public class SystemServiceImpl implements SystemService {
 
   final TestSiteMapper testSiteMapper;
 
-  public SystemServiceImpl(@Autowired CommunityMapper communityMapper, LocationMapper locationMapper, TestSiteMapper testSiteMapper) {
+  public SystemServiceImpl(@Autowired CommunityMapper communityMapper, LocationMapper locationMapper,
+      TestSiteMapper testSiteMapper) {
     this.communityMapper = communityMapper;
     this.locationMapper = locationMapper;
     this.testSiteMapper = testSiteMapper;
@@ -48,7 +49,7 @@ public class SystemServiceImpl implements SystemService {
   @Override
   public Map<String, List<TestSite>> getTestSiteByCommunity(String community_id) {
     List<TestSite> allTestSite = testSiteMapper.getAllTestSite(community_id);
-    Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getTest_site));
+    Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getTestsite));
     return map;
   }
 }
