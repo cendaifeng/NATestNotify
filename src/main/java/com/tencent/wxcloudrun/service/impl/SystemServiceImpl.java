@@ -49,7 +49,7 @@ public class SystemServiceImpl implements SystemService {
   @Override
   public Map<String, List<TestSite>> getTestSiteByCommunity(String community_id) {
     List<TestSite> allTestSite = testSiteMapper.getAllTestSite(community_id);
-    Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getSiteName));
+    Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getSitename));
     return map;
   }
 }
