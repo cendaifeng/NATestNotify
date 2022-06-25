@@ -5,7 +5,7 @@
     <resultMap id="testSiteMapper" type="com.tencent.wxcloudrun.model.Community">
         <id property="site_id" column="site_id"/>
         <result property="community_id" column="community_id"/>
-        <result property="site_name" column="site_name" javaType="java.lang.String"/>
+        <result property="sitename" column="site_name" javaType="java.lang.String"/>
         <result property="site_location" column="site_location" javaType="java.lang.String"/>
     </resultMap>
 

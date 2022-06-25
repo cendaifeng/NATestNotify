@@ -17,7 +17,7 @@ public class TestSite implements Serializable {
 
   private Integer community_id;
 
-  private String site_name;
+  private String sitename;
 
   private String site_location;
 
