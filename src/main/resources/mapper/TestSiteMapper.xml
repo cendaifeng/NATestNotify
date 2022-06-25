@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tencent.wxcloudrun.dao.TestSiteMapper">
+
+    <resultMap id="testSiteMapper" type="com.tencent.wxcloudrun.model.Community">
+        <id property="site_id" column="site_id"/>
+        <result property="community_id" column="community_id"/>
+        <result property="site_name" column="site_name" javaType="java.lang.String"/>
+        <result property="site_location" column="site_location" javaType="java.lang.String"/>
+    </resultMap>
+
+    <select id="getAllTestSite" resultMap="testSiteMapper" parameterType="java.lang.String">
+        SELECT *
+        FROM test_site_list
+        WHERE community_id = #{community_id}
+    </select>
+
+</mapper>

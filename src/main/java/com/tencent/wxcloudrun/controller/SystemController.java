@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.model.Community;
 import com.tencent.wxcloudrun.model.Location;
+import com.tencent.wxcloudrun.model.TestSite;
 import com.tencent.wxcloudrun.service.SystemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,6 +77,18 @@ public class SystemController {
     logger.info("/system/community get request");
     Map<String, List<Location>> community_info =  systemService.getCommunityLocation(community_id);
     return ApiResponse.ok(community_info);
+  }
+
+  /**
+   * 根据community_id查询其全部test_site信息
+   * input: community_id
+   * 
+   */
+  @GetMapping(value = "/system/testSite")
+  ApiResponse getTestSiteByCommunity(@RequestParam String community_id) {
+    logger.info("/system/testSite get request");
+    Map<String, List<TestSite>> testSite_info = systemService.getTestSiteByCommunity(community_id);
+    return ApiResponse.ok(testSite_info);
   }
   
 }
