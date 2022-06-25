@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.tencent.wxcloudrun.dao.TestSiteMapper">
 
-    <resultMap id="testSiteMapper" type="com.tencent.wxcloudrun.model.Community">
+    <resultMap id="testSiteMapper" type="com.tencent.wxcloudrun.model.TestSite">
         <id property="site_id" column="site_id"/>
         <result property="community_id" column="community_id"/>
         <result property="sitename" column="site_name" javaType="java.lang.String"/>
