@@ -48,7 +48,7 @@ public class SystemServiceImpl implements SystemService {
   @Override
   public Map<String, List<TestSite>> getTestSiteByCommunity(String community_id) {
     List<TestSite> allTestSite = testSiteMapper.getAllTestSite(community_id);
-    Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getSite_Name));
+    Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getTest_site));
     return map;
   }
 }
