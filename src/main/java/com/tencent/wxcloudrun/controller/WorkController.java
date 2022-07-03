@@ -72,13 +72,13 @@ public class WorkController {
     executor.submit(() -> {
       int page = 0;
       while (Calendar.getInstance(Locale.CHINA).getTime().before(et)) {
-        logger.info("nowDate：" + Calendar.getInstance(Locale.CHINA).getTime());
+        logger.info("nowDate：" + Calendar.getInstance(TimeZone.getTimeZone("GMT+8"), Locale.CHINA).getTime());
         logger.info("et：" + et);
         logger.info("st：" + st);
-        logger.info("nowDate.before(et): " + Calendar.getInstance(Locale.CHINA).getTime().before(et));
-        logger.info("nowDate.after(st): " + Calendar.getInstance(Locale.CHINA).getTime().after(st));
+        logger.info("nowDate.before(et): " + Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA).getTime().before(et));
+        logger.info("nowDate.after(st): " + Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA).getTime().after(st));
         logger.info("=============================================");
-        if (!Calendar.getInstance(Locale.CHINA).getTime().after(st)) {
+        if (!Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA).getTime().after(st)) {
           try {
             TimeUnit.MINUTES.sleep(1);
           } catch (InterruptedException e) {
