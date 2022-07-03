@@ -43,7 +43,7 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
   }
 
   @Override
-  public Optional<IPage<Resident>> getResidentByLocationIdsPage(List location_ids, Integer page, Integer limit) {
+  public Optional<IPage<Resident>> getResidentByLocationIdsPage(List location_ids, String page, String limit) {
     IPage<Resident> page1 = new Query<Resident>().getPage(new HashMap<String, Object>() {{
       put("page", page);
       put("limit", limit);

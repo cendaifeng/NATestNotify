@@ -58,8 +58,8 @@ public class WorkController {
     Date st = sdf.parse(st_str);
     Date et = sdf.parse(et_str);
 
-    Optional<IPage<Resident>> r = residentService.getResidentByLocationIdsPage(locationIds, 1, 1);
-    if (!r.isPresent()) {
+    IPage<Resident> r = residentService.getResidentByLocationIdsPage(locationIds, "1", "1").get();
+    if (r.getSize() == 0) {
       logger.info("选定位置无有效居民");
       return ApiResponse.ok();
     }
@@ -67,9 +67,17 @@ public class WorkController {
     executor.submit(() -> {
       Date nowDate = new Date();
       int page = 0;
-      while (nowDate.after(st) && nowDate.before(et)) {
+      while (nowDate.before(et)) {
+        if (!nowDate.after(st)) {
+          try {
+            TimeUnit.MINUTES.sleep(1);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+          continue;
+        }
         page++;
-        IPage<Resident> residentList = residentService.getResidentByLocationIdsPage(locationIds, page, capability).get();
+        IPage<Resident> residentList = residentService.getResidentByLocationIdsPage(locationIds, String.valueOf(page), String.valueOf(capability)).get();
         for (Resident record : residentList.getRecords()) {
           logger.info("推送消息：" + record);
 //          residentService.pushMsg(resid);

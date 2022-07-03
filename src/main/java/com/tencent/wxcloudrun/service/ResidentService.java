@@ -15,7 +15,7 @@ public interface ResidentService extends IService<Resident> {
 
   Optional<List<Resident>> getResidentByLocationIds(List location_ids);
 
-  Optional<IPage<Resident>> getResidentByLocationIdsPage(List location_ids, Integer page, Integer limit);
+  Optional<IPage<Resident>> getResidentByLocationIdsPage(List location_ids, String page, String limit);
 
   boolean register(Resident resident);
 
