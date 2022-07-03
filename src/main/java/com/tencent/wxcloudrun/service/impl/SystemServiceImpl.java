@@ -52,4 +52,10 @@ public class SystemServiceImpl implements SystemService {
     Map<String, List<TestSite>> map = allTestSite.stream().collect(Collectors.groupingBy(TestSite::getSitename));
     return map;
   }
+
+  @Override
+  public TestSite getTestSite(Integer site_id) {
+    TestSite site = testSiteMapper.getTestSite(site_id);
+    return site;
+  }
 }

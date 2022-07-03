@@ -15,4 +15,10 @@
         WHERE community_id = #{community_id}
     </select>
 
+    <select id="getTestSite" resultMap="testSiteMapper" parameterType="java.lang.Integer">
+        SELECT *
+        FROM test_site_list
+        WHERE site_id = #{site_id}
+    </select>
+
 </mapper>

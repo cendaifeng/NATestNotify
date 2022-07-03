@@ -16,4 +16,6 @@ public interface SystemService{
   Map<String, List<Location>> getCommunityLocation(String community_id);
 
   Map<String, List<TestSite>> getTestSiteByCommunity(String community_id);
+
+  TestSite getTestSite(Integer site_id);
 }

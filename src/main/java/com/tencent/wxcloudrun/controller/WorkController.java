@@ -3,7 +3,9 @@ package com.tencent.wxcloudrun.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.model.Resident;
+import com.tencent.wxcloudrun.model.TestSite;
 import com.tencent.wxcloudrun.service.ResidentService;
+import com.tencent.wxcloudrun.service.SystemService;
 import com.tencent.wxcloudrun.service.WorkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import static java.lang.Thread.sleep;
 public class WorkController {
 
   final WorkService workService;
+  final SystemService systemService;
   final ResidentService residentService;
   final Logger logger;
 
@@ -31,8 +34,9 @@ public class WorkController {
           10, 100, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<>(100000),
           Executors.defaultThreadFactory(), new ThreadPoolExecutor.CallerRunsPolicy());
 
-  public WorkController(@Autowired WorkService workService, ResidentService residentService) {
+  public WorkController(@Autowired WorkService workService, SystemService systemService, ResidentService residentService) {
     this.workService = workService;
+    this.systemService = systemService;
     this.residentService = residentService;
     this.logger = LoggerFactory.getLogger(WorkController.class);
   }
@@ -59,6 +63,7 @@ public class WorkController {
     Date et = sdf.parse(et_str);
 
     IPage<Resident> r = residentService.getResidentByLocationIdsPage(locationIds, "1", "1").get();
+    TestSite site = systemService.getTestSite(site_id);
     if (r.getSize() == 0) {
       logger.info("选定位置无有效居民");
       return ApiResponse.ok();
@@ -83,9 +88,10 @@ public class WorkController {
         }
         page++;
         IPage<Resident> residentList = residentService.getResidentByLocationIdsPage(locationIds, String.valueOf(page), String.valueOf(capability)).get();
+        String dateStr = String.join(" ~ ", st_str, et_str);
         for (Resident record : residentList.getRecords()) {
           logger.info("推送消息：" + record);
-//          residentService.pushMsg(resid);
+          residentService.pushMsg(record, site.getSitename(), dateStr);
         }
         try {
 //          TimeUnit.HOURS.sleep(1);

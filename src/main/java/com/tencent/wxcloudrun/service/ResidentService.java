@@ -23,6 +23,5 @@ public interface ResidentService extends IService<Resident> {
 
   boolean updateByIc(Resident resident);
 
-  boolean pushMsg(String open_id);
-
+  boolean pushMsg(Resident r, String site_name, String time);
 }

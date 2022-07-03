@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
 import com.tencent.wxcloudrun.config.Query;
 import com.tencent.wxcloudrun.dao.ResidentMapper;
+import com.tencent.wxcloudrun.dto.TemplateRequest;
 import com.tencent.wxcloudrun.model.Resident;
 import com.tencent.wxcloudrun.service.ResidentService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +26,7 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
 
   final ResidentMapper residentMapper;
 
-  public static String sendPost(String url, String content) throws IOException {
+  public static String sendPost(String content) throws IOException {
     OkHttpClient client = new OkHttpClient().newBuilder()
             .build();
     MediaType mediaType = MediaType.parse("application/json");
@@ -95,9 +97,18 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
   }
 
   @Override
-  public boolean pushMsg(String open_id) {
+  public boolean pushMsg(Resident r, String site_name, String time) {
 
-    return false;
+    TemplateRequest template = new TemplateRequest(r.getOpen_id(), r.getName(), site_name, time);
+    try {
+      sendPost(new Gson().toJson(template));
+    } catch (IOException e) {
+      log.info("postMsg出错："+e);
+      e.printStackTrace();
+      return false;
+    }
+
+    return true;
   }
 
 }

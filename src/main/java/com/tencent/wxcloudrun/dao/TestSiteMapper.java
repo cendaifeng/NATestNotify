@@ -17,4 +17,6 @@ public interface TestSiteMapper {
 
   List<TestSite> getAllTestSite(@Param("community_id") String community_id);
 
+  TestSite getTestSite(@Param("site_id") Integer site_id);
+
 }
