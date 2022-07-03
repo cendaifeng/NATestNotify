@@ -58,37 +58,41 @@ public class ResidentController {
   @PostMapping(value = "/resident/login")
   ApiResponse login(@RequestBody Map info) {
     logger.info("/resident/login post request");
-    String ic_card_no = (String) info.get("ic_card_no");
     String open_id = (String) info.get("open_id");
-    Optional<Resident> resid = residentService.getResident(ic_card_no);
+//    String ic_card_no = (String) info.get("ic_card_no");
+//    Optional<Resident> resid = residentService.getResident(ic_card_no);
+
+    Optional<Resident> resid = residentService.getResidentByOpenId(open_id);
     if (!resid.isPresent())
       return ApiResponse.ok("该微信账号未绑定身份信息，请先注册",
               new HashMap<Object, Object>(){{
                 put("status", 0);}});
 
-    String resid_open_id = resid.get().getOpen_id();
+    String sha1 = getSha1(open_id.concat(resid.get().getIc_card_no()));
+    return ApiResponse.ok(new HashMap<Object, Object>(){{
+      put("status", 1);
+      put("qrcode", sha1);}});
 
-    if (resid_open_id == null || resid_open_id.equals("")) {
-      Resident resid2 = resid.get();
-      resid2.setOpen_id(open_id);
-      if (!residentService.updateByIc(resid2))
-        logger.info("用户openid更新失败");
-      resid_open_id = open_id;
-    }
+//    String resid_open_id = resid.get().getOpen_id();
+//    if (resid_open_id == null || resid_open_id.equals("")) {
+//      Resident resid2 = resid.get();
+//      resid2.setOpen_id(open_id);
+//      if (!residentService.updateByIc(resid2))
+//        logger.info("用户openid更新失败");
+//      resid_open_id = open_id;
+//    }
 
-    if (open_id.equals(resid_open_id)) {
-      String sha1 = getSha1(open_id.concat(ic_card_no));
-      HashMap<Object, Object> hashMap = new HashMap<Object, Object>() {{
-        put("status", 1);
-        put("qrcode", sha1);
-        put("is_staff", resid.get().is_staff());
-      }};
-      return ApiResponse.ok(hashMap);
-    } else {
-      return ApiResponse.ok("该用户已使用其他微信账户注册",
-              new HashMap<Object, Object>(){{
-                put("status", 2);}});
-    }
+//    if (open_id.equals(resid_open_id)) {
+//      String sha1 = getSha1(open_id.concat(ic_card_no));
+//      return ApiResponse.ok(new HashMap<Object, Object>(){{
+//        put("status", 1);
+//        put("qrcode", sha1);}});
+//    } else {
+//      return ApiResponse.ok("该用户已使用其他微信账户注册",
+//              new HashMap<Object, Object>(){{
+//                put("status", 2);}});
+//    }
+
   }
 
   /**
