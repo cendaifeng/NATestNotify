@@ -1,23 +1,19 @@
 package com.tencent.wxcloudrun.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.tencent.wxcloudrun.dao.CountersMapper;
+import com.tencent.wxcloudrun.config.Query;
 import com.tencent.wxcloudrun.dao.ResidentMapper;
-import com.tencent.wxcloudrun.model.Counter;
 import com.tencent.wxcloudrun.model.Resident;
-import com.tencent.wxcloudrun.service.CounterService;
 import com.tencent.wxcloudrun.service.ResidentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -38,6 +34,23 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
   @Override
   public Optional<Resident> getResidentByOpenId(String open_id) {
     return Optional.ofNullable(residentMapper.getResidentByOpenId(open_id));
+  }
+
+  @Override
+  public Optional<List<Resident>> getResidentByLocationIds(List location_ids) {
+    List<Resident> residents = this.list(new QueryWrapper<Resident>().in("location_id", location_ids));
+    return Optional.ofNullable(residents);
+  }
+
+  @Override
+  public Optional<IPage<Resident>> getResidentByLocationIdsPage(List location_ids, Integer page, Integer limit) {
+    IPage<Resident> page1 = new Query<Resident>().getPage(new HashMap<String, Object>() {{
+      put("page", page);
+      put("limit", limit);
+    }});
+    QueryWrapper<Resident> wrapper = new QueryWrapper<Resident>().in("location_id", location_ids);
+    IPage<Resident> ipage = this.page(page1, wrapper);
+    return Optional.ofNullable(ipage);
   }
 
   @Override

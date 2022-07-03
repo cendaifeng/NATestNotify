@@ -78,9 +78,12 @@ public class ResidentController {
 
     if (open_id.equals(resid_open_id)) {
       String sha1 = getSha1(open_id.concat(ic_card_no));
-      return ApiResponse.ok(new HashMap<Object, Object>(){{
+      HashMap<Object, Object> hashMap = new HashMap<Object, Object>() {{
         put("status", 1);
-        put("qrcode", sha1);}});
+        put("qrcode", sha1);
+        put("is_staff", resid.get().is_staff());
+      }};
+      return ApiResponse.ok(hashMap);
     } else {
       return ApiResponse.ok("该用户已使用其他微信账户注册",
               new HashMap<Object, Object>(){{
