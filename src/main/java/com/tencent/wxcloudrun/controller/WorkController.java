@@ -67,10 +67,12 @@ public class WorkController {
     executor.submit(() -> {
       Date nowDate = new Date();
       int page = 0;
-      logger.info("nowDate：" + nowDate);
-      logger.info("et：" + et);
-      logger.info("st：" + st);
       while (nowDate.before(et)) {
+        logger.info("nowDate：" + nowDate);
+        logger.info("et：" + et);
+        logger.info("st：" + st);
+        logger.info("nowDate.before(et): " + nowDate.before(et));
+        logger.info("nowDate.after(st): " + nowDate.after(st));
         if (!nowDate.after(st)) {
           try {
             TimeUnit.MINUTES.sleep(1);
