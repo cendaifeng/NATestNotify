@@ -26,20 +26,26 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
 
   final ResidentMapper residentMapper;
 
-  public static String sendPost(String content) throws IOException {
-    OkHttpClient client = new OkHttpClient().newBuilder()
-            .build();
-    MediaType mediaType = MediaType.parse("application/json");
-    RequestBody body = RequestBody.create(mediaType, content);
-    Request request = new Request.Builder()
-            .url("https://springboot-dohf-1968677-1312192378.ap-shanghai.run.tcloudbase.com/cgi-bin/message/subscribe/send")
-            .method("POST", body)
-            .addHeader("User-Agent", "apifox/1.0.0 (https://www.apifox.cn)")
-            .addHeader("Content-Type", "application/json")
-            .addHeader("Content-Length", "")
-            .build();
-    Response response = client.newCall(request).execute();
-    return response.toString();
+  public static Response sendPost(String content) throws IOException {
+    Response response = null;
+    try {
+      OkHttpClient client = new OkHttpClient().newBuilder()
+              .build();
+      MediaType mediaType = MediaType.parse("application/json");
+      RequestBody body = RequestBody.create(mediaType, content);
+      Request request = new Request.Builder()
+              .url("https://springboot-dohf-1968677-1312192378.ap-shanghai.run.tcloudbase.com/cgi-bin/message/subscribe/send")
+              .method("POST", body)
+              .addHeader("User-Agent", "apifox/1.0.0 (https://www.apifox.cn)")
+              .addHeader("Content-Type", "application/json")
+              .addHeader("Content-Length", "")
+              .build();
+      response = client.newCall(request).execute();
+    } finally {
+      response.close();
+    }
+
+    return response;
   }
 
   public ResidentServiceImpl(@Autowired ResidentMapper residentMapper) {
@@ -68,7 +74,7 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
       put("page", page);
       put("limit", limit);
     }});
-    QueryWrapper<Resident> wrapper = new QueryWrapper<Resident>().in("location_id", location_ids);
+    QueryWrapper<Resident> wrapper = new QueryWrapper<Resident>().select("open_id", "name").in("location_id", location_ids);
     IPage<Resident> ipage = this.page(page1, wrapper);
     return Optional.ofNullable(ipage);
   }
@@ -101,7 +107,8 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
 
     TemplateRequest template = new TemplateRequest(r.getOpen_id(), r.getName(), site_name, time);
     try {
-      sendPost(new Gson().toJson(template));
+      Response res = sendPost(new Gson().toJson(template));
+      log.info("res:"+res);
     } catch (IOException e) {
       log.info("postMsg出错："+e);
       e.printStackTrace();
