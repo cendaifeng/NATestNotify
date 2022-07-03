@@ -67,6 +67,9 @@ public class WorkController {
     executor.submit(() -> {
       Date nowDate = new Date();
       int page = 0;
+      logger.info("nowDate：" + nowDate);
+      logger.info("et：" + et);
+      logger.info("st：" + st);
       while (nowDate.before(et)) {
         if (!nowDate.after(st)) {
           try {
