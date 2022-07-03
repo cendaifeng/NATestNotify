@@ -65,15 +65,14 @@ public class WorkController {
     }
 
     executor.submit(() -> {
-      Date nowDate = new Date();
       int page = 0;
-      while (nowDate.before(et)) {
-        logger.info("nowDate：" + nowDate);
+      while (new Date().before(et)) {
+        logger.info("nowDate：" + new Date());
         logger.info("et：" + et);
         logger.info("st：" + st);
-        logger.info("nowDate.before(et): " + nowDate.before(et));
-        logger.info("nowDate.after(st): " + nowDate.after(st));
-        if (!nowDate.after(st)) {
+        logger.info("nowDate.before(et): " + new Date().before(et));
+        logger.info("nowDate.after(st): " + new Date().after(st));
+        if (!new Date().after(st)) {
           try {
             TimeUnit.MINUTES.sleep(1);
           } catch (InterruptedException e) {
