@@ -41,6 +41,13 @@ public class WorkController {
     this.logger = LoggerFactory.getLogger(WorkController.class);
   }
 
+  static Date getTime() {
+    Calendar calendar = Calendar.getInstance();
+    calendar.add(Calendar.HOUR,8);
+    Date time = calendar.getTime();
+    return time;
+  }
+
   /**
    * 社工发起检测任务
    * @return API response json
@@ -71,14 +78,14 @@ public class WorkController {
 
     executor.submit(() -> {
       int page = 0;
-      while (Calendar.getInstance(Locale.CHINA).getTime().before(et)) {
-        logger.info("nowDate：" + Calendar.getInstance(TimeZone.getTimeZone("GMT+8"), Locale.CHINA).getTime());
+      while (getTime().before(et)) {
+        logger.info("nowDate：" + getTime());
         logger.info("et：" + et);
         logger.info("st：" + st);
-        logger.info("nowDate.before(et): " + Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA).getTime().before(et));
-        logger.info("nowDate.after(st): " + Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA).getTime().after(st));
+        logger.info("nowDate.before(et): " + getTime().before(et));
+        logger.info("nowDate.after(st): " + getTime().after(st));
         logger.info("=============================================");
-        if (!Calendar.getInstance(TimeZone.getTimeZone("GMT+8"),Locale.CHINA).getTime().after(st)) {
+        if (!getTime().after(st)) {
           try {
             TimeUnit.MINUTES.sleep(1);
           } catch (InterruptedException e) {
