@@ -74,9 +74,15 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
       put("page", page);
       put("limit", limit);
     }});
-    QueryWrapper<Resident> wrapper = new QueryWrapper<Resident>().select("open_id", "name").in("location_id", location_ids);
+    QueryWrapper<Resident> wrapper = new QueryWrapper<Resident>().in("location_id", location_ids);
     IPage<Resident> ipage = this.page(page1, wrapper);
     return Optional.ofNullable(ipage);
+  }
+
+  @Override
+  public Optional<List<Resident>> getResidentByLocationIdsPage2(List location_ids, String page, String limit) {
+
+    return Optional.ofNullable(residentMapper.getResidentByLocations(location_ids, page, limit));
   }
 
   @Override
@@ -106,6 +112,7 @@ public class ResidentServiceImpl extends ServiceImpl<ResidentMapper, Resident> i
   public boolean pushMsg(Resident r, String site_name, String time) {
 
     TemplateRequest template = new TemplateRequest(r.getOpen_id(), r.getName(), site_name, time);
+    log.info("temp:"+template);
     try {
       Response res = sendPost(new Gson().toJson(template));
       log.info("res:"+res);

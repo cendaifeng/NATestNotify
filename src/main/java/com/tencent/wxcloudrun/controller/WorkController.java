@@ -94,9 +94,9 @@ public class WorkController {
           continue;
         }
         page++;
-        IPage<Resident> residentList = residentService.getResidentByLocationIdsPage(locationIds, String.valueOf(page), String.valueOf(capability)).get();
+        List<Resident> residentList = residentService.getResidentByLocationIdsPage2(locationIds, String.valueOf(page), String.valueOf(capability)).get();
         String dateStr = String.join(" ~ ", st_str, et_str);
-        for (Resident record : residentList.getRecords()) {
+        for (Resident record : residentList) {
           logger.info("推送消息：" + record);
           residentService.pushMsg(record, site.getSitename(), dateStr);
         }

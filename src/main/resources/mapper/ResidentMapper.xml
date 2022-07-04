@@ -27,6 +27,16 @@
         WHERE open_id = #{open_id}
     </select>
 
+    <select id="getResidentByLocations" resultMap="residentMapper">
+        SELECT *
+        FROM resident_info
+        WHERE location_id in
+            <foreach collection="location_ids" item="item" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        limit #{start}, #{limit}
+    </select>
+
 <!--    <update id="upsertResident" parameterType="com.tencent.wxcloudrun.model.Resident">-->
 <!--        INSERT INTO `resident_info`(`id_card_no`, `open_id`, `name`, `phone`, `community_id`,-->
 <!--        `is_staff`, `location`)-->
